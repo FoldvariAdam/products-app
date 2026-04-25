@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:products_app/core/navigation/navigation_service.dart';
 import 'package:products_app/core/navigation/shells/shells.dart';
 import 'package:products_app/presentation/home/view/home_page.dart';
 import 'package:products_app/presentation/product_details/view/product_details_page.dart';
-
-import 'navigation_service.dart';
 
 GoRouter? _router;
 final _appShellNavigatorKey = GlobalKey<NavigatorState>(

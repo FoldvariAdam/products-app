@@ -1,6 +1,34 @@
 part of 'home_bloc.dart';
 
 @immutable
-sealed class HomeState {}
+sealed class HomeState extends Equatable {
+  const HomeState();
 
-final class HomeInitial extends HomeState {}
+  @override
+  List<Object?> get props => [];
+}
+
+final class HomeInitialState extends HomeState {}
+
+final class HomeLoadingState extends HomeState {
+  const HomeLoadingState();
+}
+
+final class HomeLoadedState extends HomeState {
+  final List<Product> products;
+
+  const HomeLoadedState(this.products);
+
+  @override
+  List<Object?> get props => [products];
+}
+
+final class HomeErrorState extends HomeState {
+  final String message;
+
+  const HomeErrorState(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
+
