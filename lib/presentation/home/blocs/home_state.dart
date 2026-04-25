@@ -31,4 +31,3 @@ final class HomeErrorState extends HomeState {
   @override
   List<Object?> get props => [message];
 }
-

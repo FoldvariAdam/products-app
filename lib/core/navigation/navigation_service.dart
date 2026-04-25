@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:products_app/domain/products/models/models.dart';
 
 enum NavigationRoute {
   home(),
@@ -7,8 +8,7 @@ enum NavigationRoute {
 
   final String? _customPath;
 
-  const NavigationRoute({String? customPath})
-      : _customPath = customPath;
+  const NavigationRoute({String? customPath}) : _customPath = customPath;
 
   String get path => _customPath ?? name;
 }
@@ -28,8 +28,12 @@ class NavigationService {
   void goBack<T extends Object?>([T? result]) =>
       GoRouter.of(context).pop(result);
 
-  void goToDetailsPage() {
-    _goToPageImpl(context: context, route: NavigationRoute.productDetails);
+  void goToDetailsPage({required Product product}) {
+    _goToPageImpl(
+      context: context,
+      route: NavigationRoute.productDetails,
+      extra: {'product': product},
+    );
   }
 
   void _goToPageImpl({

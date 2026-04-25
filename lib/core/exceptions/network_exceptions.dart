@@ -1,4 +1,4 @@
-import 'base_exceptions.dart';
+import 'package:products_app/core/exceptions/base_exceptions.dart';
 
 class NetworkException extends AppException {
   NetworkException([super.message = 'No internet connection']);

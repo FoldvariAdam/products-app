@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
 
     return BlocProvider(
       create: (_) =>
-      GetIt.instance.get<HomeBloc>()..add(const HomeFetchProductsEvent()),
+          GetIt.instance.get<HomeBloc>()..add(const HomeFetchProductsEvent()),
       child: Scaffold(
         backgroundColor: appTheme.backgroundColor,
         body: SafeArea(
@@ -27,10 +27,12 @@ class HomePage extends StatelessWidget {
                   builder: (context, state) {
                     return switch (state) {
                       HomeLoadingState() => const _LoadingView(),
-                      HomeErrorState(:final message) =>
-                          _ErrorView(message: message),
-                      HomeLoadedState(:final products) =>
-                          _ListView(products: products),
+                      HomeErrorState(:final message) => _ErrorView(
+                        message: message,
+                      ),
+                      HomeLoadedState(:final products) => _ListView(
+                        products: products,
+                      ),
                       _ => const SizedBox(),
                     };
                   },
@@ -89,7 +91,11 @@ class _ErrorView extends StatelessWidget {
           children: [
             Icon(Icons.error, color: appTheme.primaryColor),
             SizedBox(height: appTheme.s2),
-            Text(message, style: appTheme.bodyText, textAlign: TextAlign.center),
+            Text(
+              message,
+              style: appTheme.bodyText,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

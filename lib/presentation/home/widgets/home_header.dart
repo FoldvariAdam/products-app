@@ -20,7 +20,7 @@ class HomeHeader extends StatelessWidget {
             style: appTheme.subTitle,
           ),
           SizedBox(height: appTheme.s3),
-          
+
           TextField(
             decoration: InputDecoration(
               hintText: 'Keresés...',

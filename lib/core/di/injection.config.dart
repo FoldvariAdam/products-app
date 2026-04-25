@@ -12,8 +12,7 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:products_app/core/di/modules/network_module%C3%BA.dart'
-    as _i651;
+import 'package:products_app/core/di/modules/network_module.dart' as _i58;
 import 'package:products_app/data/data.dart' as _i784;
 import 'package:products_app/data/repositories/products/products_repository_impl.dart'
     as _i660;
@@ -41,4 +40,4 @@ extension GetItInjectableX on _i174.GetIt {
   }
 }
 
-class _$NetworkModule extends _i651.NetworkModule {}
+class _$NetworkModule extends _i58.NetworkModule {}

@@ -11,4 +11,3 @@ sealed class HomeEvent extends Equatable {
 final class HomeFetchProductsEvent extends HomeEvent {
   const HomeFetchProductsEvent();
 }
-

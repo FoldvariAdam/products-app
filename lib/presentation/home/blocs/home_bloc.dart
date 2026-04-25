@@ -6,6 +6,7 @@ import 'package:products_app/data/data.dart';
 import 'package:products_app/domain/domain.dart';
 
 part 'home_event.dart';
+
 part 'home_state.dart';
 
 @injectable
