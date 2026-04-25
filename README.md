@@ -1,17 +1,70 @@
-# products_app
+# Products App
 
-A new Flutter project.
+## Rövid projektleírás
 
-## Getting Started
+Ez egy Flutter alapú termékkatalógus alkalmazás, ahol a felhasználó böngészhet termékeket, kereshet közöttük, valamint kedvencekhez adhatja őket.
 
-This project is a starting point for a Flutter application.
+A termékek egy remote API-ból érkeznek, a kedvencek pedig lokálisan (SharedPreferences) kerülnek tárolásra.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Futtatási lépések
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Függőségek telepítése:
+```bash
+flutter pub get
+```
+
+2. Készülék/Emulator csatlakoztatása
+
+3. App futtatása:
+```bash
+flutter run
+```
+
+## Architektúra
+
+A projekt Clean Architecture elveket követ, három fő réteggel:
+
+Data layer:
+- API kommunikáció (Dio)
+- Local storage (SharedPreferences)
+- Repository implementáció
+
+Domain layer:
+- Use case-ek (pl. toggle favorite)
+- Business modellek
+- Repository interface-ek
+
+Presentation layer:
+- BLoC state management
+- UI réteg (Flutter widgetek)
+
+Miért ezt az architektúrát?
+- Jól skálázható nagyobb projektekhez.
+- Könnyen tesztelhető.
+- Jól szeparálja a felelősségeket.
+- Könnyen cserélhető adatforrás (API / local)
+
+Miért Bloc állapotkezelés?
+
+- Az event/state alapú logika bár kicsit több kód és valamikor boilerplate de sokkal jobban követhető.
+- Könnyű tesztelni.
+- Könnyen lehet kezelni a konkurens event-eket meg a hibákat.
+
+
+## Ismert hiányosságok
+
+- Nincs offline cache a terméklistára.
+- A thumbnail network url-t sem cachelem el.
+
+## További fejlesztések (+2 óra esetén)
+
+- Kijavítanám az ismert hiányosságokat.
+- Pull-to-refresh.
+- Loading skeleton UI.
+- UI téma kezelés finomhangolása.
+- Jobb favorite kezelés,
+- Unit + bloc tesztek bővítése.
+- Lokalizáció.
+- Nem a shared preferences könyvtárat használnám.
