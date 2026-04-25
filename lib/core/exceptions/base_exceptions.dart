@@ -5,5 +5,5 @@ abstract class AppException implements Exception {
 }
 
 class UnknownException extends AppException {
-  UnknownException([super.message = 'Unknown exception']);
+  UnknownException([super.message = 'Ismeretlen hiba történt']);
 }

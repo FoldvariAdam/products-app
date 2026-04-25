@@ -127,7 +127,9 @@ class _EmptyView extends StatelessWidget {
 class _ErrorView extends StatelessWidget {
   final String message;
 
-  const _ErrorView({required this.message});
+  const _ErrorView({
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -141,10 +143,19 @@ class _ErrorView extends StatelessWidget {
           children: [
             Icon(Icons.error, color: appTheme.primaryColor),
             SizedBox(height: appTheme.s2),
+
             Text(
               message,
               style: appTheme.bodyText,
               textAlign: TextAlign.center,
+            ),
+
+            SizedBox(height: appTheme.s3),
+
+            ElevatedButton.icon(
+              onPressed: () => context.read<HomeBloc>().add(const HomeFetchProductsEvent()),
+              icon: const Icon(Icons.refresh),
+              label: const Text('Újrapróbálás'),
             ),
           ],
         ),
