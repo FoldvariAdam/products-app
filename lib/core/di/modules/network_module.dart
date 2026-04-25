@@ -17,5 +17,5 @@ abstract class NetworkModule {
   }
 
   @lazySingleton
-  ProductsApiClient productsApiClient(Dio dio) => ProductsApiClient(dio);
+  ProductsRemoteDataSource productsRemoteDataSource(Dio dio) => ProductsRemoteDataSource(dio);
 }

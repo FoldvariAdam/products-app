@@ -16,11 +16,12 @@ final class HomeLoadingState extends HomeState {
 
 final class HomeLoadedState extends HomeState {
   final List<Product> products;
+  final String query;
 
-  const HomeLoadedState(this.products);
+  const HomeLoadedState(this.products, {this.query = ''});
 
   @override
-  List<Object?> get props => [products];
+  List<Object?> get props => [products, query];
 }
 
 final class HomeErrorState extends HomeState {

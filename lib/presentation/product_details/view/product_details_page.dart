@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:products_app/core/core.dart';
 import 'package:products_app/domain/products/models/product.dart';
+import 'package:products_app/domain/products/use_cases/toggle_favorite_use_case.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Product product;
@@ -12,18 +14,15 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  final ToggleFavoriteUseCase _toggleFavoriteUseCase = GetIt.instance
+      .get<ToggleFavoriteUseCase>();
+
   late bool isFavorite;
 
   @override
   void initState() {
     super.initState();
     isFavorite = widget.product.isFavorite;
-  }
-
-  void toggleFavorite() {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
   }
 
   @override
@@ -57,7 +56,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 left: 10,
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back),
-                  onPressed: () => NavigationService.of(context).goBack(),
+                    onPressed: () => NavigationService.of(context).goBack(isFavorite)
                 ),
               ),
             ],
@@ -134,8 +133,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         child: SizedBox(
           height: 50,
           child: ElevatedButton(
-            onPressed: () {},
-            child: const Text('Kedvenchez adás'),
+            onPressed: () async {
+              await _toggleFavoriteUseCase.execute(product.id);
+
+              setState(() {
+                isFavorite = !isFavorite;
+              });
+            },
+            child: Text(
+              isFavorite ? 'Törlés a kedvencekből' : 'Hozzáadás a kedvencekhez',
+            ),
           ),
         ),
       ),

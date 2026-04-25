@@ -2,13 +2,13 @@ import 'package:products_app/data/data_sources/remote/products/models/models.dar
 import 'package:products_app/domain/products/models/models.dart';
 
 extension ProductsResponseMapper on ProductsResponse {
-  List<Product> toDomainList() {
-    return products?.map((e) => e.toDomainModel()).toList() ?? [];
+  List<Product> toDomainList(Set<int> favorites) {
+    return products?.map((e) => e.toDomainModel(favorites)).toList() ?? [];
   }
 }
 
 extension ProductResponseMapper on ProductResponse {
-  Product toDomainModel() {
+  Product toDomainModel(Set<int> favorites) {
     return Product(
       id: id!,
       title: title,
@@ -18,6 +18,7 @@ extension ProductResponseMapper on ProductResponse {
       rating: rating,
       stock: stock,
       thumbnail: thumbnail,
+      isFavorite: favorites.contains(id),
     );
   }
 }

@@ -28,15 +28,15 @@ class NavigationService {
   void goBack<T extends Object?>([T? result]) =>
       GoRouter.of(context).pop(result);
 
-  void goToDetailsPage({required Product product}) {
-    _goToPageImpl(
+  Future<bool?> goToDetailsPage({required Product product}) {
+    return _goToPageImpl(
       context: context,
       route: NavigationRoute.productDetails,
       extra: {'product': product},
     );
   }
 
-  void _goToPageImpl({
+  Future<T?> _goToPageImpl<T>({
     required BuildContext context,
     required NavigationRoute route,
     Object? extra,
@@ -44,22 +44,26 @@ class NavigationService {
     bool? withoutStacking,
   }) {
     final routeName = route.path;
-
     final currentRoute = _getCurrentRoute(context);
 
     final newRoute = context.namedLocation(routeName, pathParameters: params);
 
-    if (currentRoute == newRoute) {
-      return;
-    }
+    if (currentRoute == newRoute) return Future.value(null);
 
     if (withoutStacking == true) {
-      context.goNamed(routeName, extra: extra, pathParameters: params);
+      return context.pushNamed<T>(
+        routeName,
+        extra: extra,
+        pathParameters: params,
+      );
     } else {
-      context.pushNamed(routeName, extra: extra, pathParameters: params);
+      return context.pushNamed<T>(
+        routeName,
+        extra: extra,
+        pathParameters: params,
+      );
     }
   }
-
   String _getCurrentRoute(BuildContext context) {
     return GoRouterState.of(context).uri.toString();
   }

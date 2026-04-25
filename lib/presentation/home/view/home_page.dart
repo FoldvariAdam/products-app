@@ -18,7 +18,9 @@ class HomePage extends StatelessWidget {
           GetIt.instance.get<HomeBloc>()..add(const HomeFetchProductsEvent()),
       child: Scaffold(
         backgroundColor: appTheme.backgroundColor,
-        body: SafeArea(
+        body: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Column(
             children: [
               const HomeHeader(),
@@ -30,8 +32,23 @@ class HomePage extends StatelessWidget {
                       HomeErrorState(:final message) => _ErrorView(
                         message: message,
                       ),
-                      HomeLoadedState(:final products) => _ListView(
-                        products: products,
+                      HomeLoadedState(:final products) => Builder(
+                        builder: (context) {
+                          final query = context.select(
+                            (HomeBloc bloc) =>
+                                (bloc.state as HomeLoadedState).query,
+                          );
+
+                          final filtered = products.where((p) {
+                            return (p.title ?? '').toLowerCase().contains(
+                              query.toLowerCase(),
+                            );
+                          }).toList();
+
+                          return filtered.isEmpty
+                              ? const _EmptyView()
+                              : _ListView(products: filtered);
+                        },
                       ),
                       _ => const SizedBox(),
                     };
@@ -71,6 +88,39 @@ class _LoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(child: CircularProgressIndicator());
+  }
+}
+
+class _EmptyView extends StatelessWidget {
+  const _EmptyView();
+
+  @override
+  Widget build(BuildContext context) {
+    final appTheme = context.appTheme;
+
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(appTheme.s3),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.search_off,
+              size: 64,
+              color: appTheme.mutedForegroundColor,
+            ),
+            SizedBox(height: appTheme.s2),
+            Text('Nincs találat', style: appTheme.bodyText),
+            SizedBox(height: appTheme.s1),
+            Text(
+              'Próbálj más keresési kifejezést',
+              style: appTheme.subTitle,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

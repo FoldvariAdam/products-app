@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_app/core/core.dart';
 import 'package:products_app/domain/products/models/product.dart';
+import 'package:products_app/presentation/home/blocs/home_bloc.dart';
 
 class ProductCard extends StatefulWidget {
   final Product product;
@@ -12,22 +14,24 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  late bool isFavorite;
-
-  @override
-  void initState() {
-    super.initState();
-    isFavorite = widget.product.isFavorite;
-  }
+  bool get _isFavorite => widget.product.isFavorite;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = context.appTheme;
 
     return InkWell(
-      onTap: () => NavigationService.of(
-        context,
-      ).goToDetailsPage(product: widget.product),
+      onTap: () async {
+        await NavigationService.of(
+          context,
+        ).goToDetailsPage(product: widget.product);
+
+        if (context.mounted) {
+          context.read<HomeBloc>().add(
+            const HomeRefreshFavoritesEvent(),
+          );
+        }
+      },
       child: Stack(
         children: [
           Container(
@@ -135,9 +139,9 @@ class _ProductCardState extends State<ProductCard> {
             right: 8,
             child: GestureDetector(
               onTap: () {
-                setState(() {
-                  isFavorite = !isFavorite;
-                });
+                context.read<HomeBloc>().add(
+                  HomeToggleFavoriteEvent(widget.product.id),
+                );
               },
               child: Container(
                 padding: const EdgeInsets.all(6),
@@ -146,9 +150,9 @@ class _ProductCardState extends State<ProductCard> {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  _isFavorite ? Icons.favorite : Icons.favorite_border,
                   size: 30,
-                  color: isFavorite ? Colors.red : Colors.grey,
+                  color: _isFavorite ? Colors.red : Colors.grey,
                 ),
               ),
             ),

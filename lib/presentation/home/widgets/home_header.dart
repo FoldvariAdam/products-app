@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_app/core/core.dart';
+import 'package:products_app/presentation/home/blocs/home_bloc.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -22,6 +24,11 @@ class HomeHeader extends StatelessWidget {
           SizedBox(height: appTheme.s3),
 
           TextField(
+            onChanged: (value) {
+              context.read<HomeBloc>().add(
+                HomeSearchChangedEvent(value),
+              );
+            },
             decoration: InputDecoration(
               hintText: 'Keresés...',
               prefixIcon: Icon(
