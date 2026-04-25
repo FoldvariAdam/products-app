@@ -10,6 +10,8 @@ class Product extends Equatable {
   final int? stock;
   final String? thumbnail;
 
+  final bool isFavorite;
+
   const Product({
     required this.id,
     this.title,
@@ -19,7 +21,22 @@ class Product extends Equatable {
     this.rating,
     this.stock,
     this.thumbnail,
+    this.isFavorite = false,
   });
+
+  Product copyWith({bool? isFavorite}) {
+    return Product(
+      id: id,
+      title: title,
+      description: description,
+      category: category,
+      price: price,
+      rating: rating,
+      stock: stock,
+      thumbnail: thumbnail,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -31,5 +48,6 @@ class Product extends Equatable {
     rating,
     stock,
     thumbnail,
+    isFavorite,
   ];
 }

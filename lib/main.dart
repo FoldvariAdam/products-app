@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:products_app/core/di/injection.dart';
-import 'package:products_app/core/navigation/navigation.dart';
+import 'package:products_app/core/core.dart';
 
 void main() {
   configureDependencies();
@@ -18,6 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(routerConfig: _router);
+    return MaterialApp.router(
+      routerConfig: _router,
+      theme: AppThemeFactory.create(),
+    );
   }
 }
